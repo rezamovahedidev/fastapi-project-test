@@ -1,12 +1,10 @@
-from .engine import Base
-from sqlalchemy.orm import Mapped, MappedColumn
-import string
+from sqlmodel import SQLModel, Field
+from sqlalchemy.dialects.postgresql import UUID
+import uuid
 
 
-class User(Base):
-    __tablenaem__ = "users"
-    id_user: Mapped[int | None] = MappedColumn(
-        primary_key=True, unique=True, default=None, nullable=False)
-    username: Mapped[str | None] = MappedColumn(
-        unique=True, nullable=True, default=f"user_guest{string.digits}")
-    password: Mapped[str] = MappedColumn(default=None)
+class Users(SQLModel, table=True):
+    id: uuid.UUID = Field(
+        default_factory=uuid.uuid4, primary_key=True)
+    username: str = Field(index=True)
+    password: str = Field(index=True)

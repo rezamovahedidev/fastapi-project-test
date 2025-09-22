@@ -1,20 +1,11 @@
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, declarative_base
+from sqlmodel import SQLModel
+from sqlmodel import create_engine
 
-SQL_URL_SQLITE = 'sqlite:///./blog.db'
-engine = create_engine(
-sessionlocal=sessionmaker(
-    bind=engine,
-    autocommit=False,
-    autoflush=False
-)
+sqlurl = "postgresql://postgres:reza123@127.0.0.1:5432/blogdb"
+# connect_args = {"check_same_thread": False}
 
-Base=declarative_base()
+async_create = create_engine(sqlurl, echo=True)
 
 
-def get_db():
-    db=sessionlocal()
-    try:
-        yield db
-    finally:
-        db.close()
+def create_db():
+    SQLModel.metadata.create_all(async_create)
