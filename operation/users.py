@@ -5,13 +5,14 @@ from db.model import Users as UsersModel
 # from db.engine import async_create
 
 
-class UsersService:
-    def __init__(self) -> None:  # type: ignore
-        self.session = engine
+class UsersService():
+    def __init__(self, session: Session) -> None:  # type: ignore
+        self.session = session 
 
-    def create(self, username: str, password: str) -> UsersModel:
-        with Session(self.session) as session:
-            user = UsersModel(username=username, password=password)
-            session.add(user)
-            session.commit()
-            return user
+    def create(self, user: UserModel) -> UsersModel:
+
+    self.session.add(user)
+    self.session.commit()
+    return user
+    
+    
